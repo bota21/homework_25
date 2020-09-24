@@ -18,9 +18,10 @@
       static BBQ = 'bbq';
       static TARTARUS = 'tartarus';
       static PESTO = 'pesto';
-      static priceForTopping = 0;
-      static calorieForTopping = 0;
-      static calorieForSause = 0;
+      static priceForOthers = 0;
+      static calorieForOthers = 0;
+      static moreToppings = [];
+      static sauseForhamburger = [];
       static sizes = {
         small: {
           price: 600,
@@ -63,7 +64,9 @@
         if (!(size in Hamburger.sizes)) throw new Error('Invalid size');
         if (!(topping in Hamburger.toppings)) throw new Error('Invalid topping');
         this.size = size;
-        this.topping = topping
+        this.topping = topping;
+        this.more_toppings = Hamburger.moreToppings;
+        this.sause = Hamburger.sauseForhamburger;
       }
       getPrice() {
         let price = 0;
@@ -76,7 +79,7 @@
           case 'salad': price += Hamburger.toppings.salad.price; break;
           case 'fries': price += Hamburger.toppings.fries.price; break;
         }
-        return price += Hamburger.priceForTopping;
+        return price += Hamburger.priceForOthers ;
       }
       getCalorie() {
         let calorie = 0;
@@ -89,30 +92,42 @@
           case 'salad': calorie += Hamburger.toppings.salad.calorie; break;
           case 'fries': calorie += Hamburger.toppings.fries.calorie; break;
         }
-        return calorie += Hamburger.calorieForTopping;
+        return calorie += Hamburger.calorieForOthers;
       }
       addTopping(topping) {
         switch (topping) {
-          case 'cheese': Hamburger.calorieForTopping += Hamburger.toppings.cheese.calorie;
-            Hamburger.priceForTopping += Hamburger.toppings.cheese.price;
+          case 'cheese': Hamburger.calorieForOthers += Hamburger.toppings.cheese.calorie;
+            Hamburger.priceForOthers  += Hamburger.toppings.cheese.price;
+            Hamburger.moreToppings.push(topping);
             break;
-          case 'salad': Hamburger.calorieForTopping += Hamburger.toppings.salad.calorie;
-            Hamburger.priceForTopping += Hamburger.toppings.salad.price;
+          case 'salad': Hamburger.calorieForOthers += Hamburger.toppings.salad.calorie;
+            Hamburger.priceForOthers  += Hamburger.toppings.salad.price;
+            Hamburger.moreToppings.push(topping);
             break;
-          case 'fries': Hamburger.calorieForTopping += Hamburger.toppings.fries.calorie;
-            Hamburger.priceForTopping += Hamburger.toppings.fries.price;
+          case 'fries': Hamburger.calorieForOthers += Hamburger.toppings.fries.calorie;
+            Hamburger.priceForOthers  += Hamburger.toppings.fries.price;
+            Hamburger.moreToppings.push(topping);
             break;
         }
-        return Hamburger.priceForTopping;
-        return Hamburger.calorieForTopping;
+        return Hamburger.priceForOthers ;
+        return Hamburger.calorieForOthers;
       }
       addSause(sause) {
         switch(sause) {
-          case 'bbq': Hamburger.calorieForSause += Hamburger.sause.bbq.calorie; break;
-          case 'tartarus': Hamburger.calorieForSause += Hamburger.sause.tartarus.calorie; break;
-          case 'pesto': Hamburger.calorieForSause += Hamburger.sause.pesto.calorie; break;
+          case 'bbq': Hamburger.calorieForOthers += Hamburger.sause.bbq.calorie; 
+          Hamburger.priceForOthers += Hamburger.sause.bbq.price;
+          Hamburger.sauseForhamburger.push(sause);
+          break;
+          case 'tartarus': Hamburger.calorieForOthers += Hamburger.sause.tartarus.calorie; 
+          Hamburger.priceForOthers += Hamburger.sause.tartarus.price;
+          Hamburger.sauseForhamburger.push(sause);
+          break;
+          case 'pesto': Hamburger.calorieForOthers += Hamburger.sause.pesto.calorie; 
+          Hamburger.priceForOthers += Hamburger.sause.pesto.price;
+          Hamburger.sauseForhamburger.push(sause);
+          break;
         }
-        return Hamburger.calorieForSause;
+        return Hamburger.calorieForOthers;
       }
     }
 
@@ -121,6 +136,10 @@
     console.log(cheeseburger.getPrice());
     console.log(cheeseburger.getCalorie());
     cheeseburger.addTopping(Hamburger.SALAD);
+    cheeseburger.addTopping(Hamburger.CHEESE);
+    cheeseburger.addSause(Hamburger.PESTO);
+    cheeseburger.addSause(Hamburger.PESTO);
+    cheeseburger.addSause(Hamburger.BBQ);
     console.log(cheeseburger);
     console.log(cheeseburger.getPrice());
     console.log(cheeseburger.getCalorie());
