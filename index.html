@@ -20,6 +20,7 @@
       static PESTO = 'pesto';
       static priceForTopping = 0;
       static calorieForTopping = 0;
+      static calorieForSause = 0;
       static sizes = {
         small: {
           price: 600,
@@ -42,6 +43,20 @@
         fries: {
           price: 100,
           calorie: 25
+        }
+      }
+      static sause = {
+        bbq: {
+          price: 0,
+          calorie: 5
+        },
+        tartarus: {
+          price: 0,
+          calorie: 7
+        },
+        pesto: {
+          price: 0,
+          calorie: 9
         }
       }
       constructor(size, topping) {
@@ -91,9 +106,24 @@
         return Hamburger.priceForTopping;
         return Hamburger.calorieForTopping;
       }
+      addSause(sause) {
+        switch(sause) {
+          case 'bbq': Hamburger.calorieForSause += Hamburger.sause.bbq.calorie; break;
+          case 'tartarus': Hamburger.calorieForSause += Hamburger.sause.tartarus.calorie; break;
+          case 'pesto': Hamburger.calorieForSause += Hamburger.sause.pesto.calorie; break;
+        }
+        return Hamburger.calorieForSause;
+      }
     }
+
     let cheeseburger = new Hamburger(Hamburger.SMALL, Hamburger.FRIES);
-    console.log(cheeseburger)
+    console.log(cheeseburger);
+    console.log(cheeseburger.getPrice());
+    console.log(cheeseburger.getCalorie());
+    cheeseburger.addTopping(Hamburger.SALAD);
+    console.log(cheeseburger);
+    console.log(cheeseburger.getPrice());
+    console.log(cheeseburger.getCalorie());
   </script>
 </body>
 
