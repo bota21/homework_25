@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    class Hamburger {
+      static SMALL = 'small';
+      static BIG = 'big';
+      static CHEESE = 'cheese';
+      static SALAD = 'salad';
+      static FRIES = 'fries';
+      static BBQ = 'bbq';
+      static TARTARUS = 'tartarus';
+      static PESTO = 'pesto';
+      static priceForTopping = 0;
+      static calorieForTopping = 0;
+      static sizes = {
+        small: {
+          price: 600,
+          calorie: 200
+        },
+        big: {
+          price: 800,
+          calorie: 300
+        }
+      }
+      static toppings = {
+        cheese: {
+          price: 150,
+          calorie: 50
+        },
+        salad: {
+          price: 50,
+          calorie: 5
+        },
+        fries: {
+          price: 100,
+          calorie: 25
+        }
+      }
+      constructor(size, topping) {
+        if (!(size in Hamburger.sizes)) throw new Error('Invalid size');
+        if (!(topping in Hamburger.toppings)) throw new Error('Invalid topping');
+        this.size = size;
+        this.topping = topping
+      }
+      getPrice() {
+        let price = 0;
+        switch (this.size) {
+          case 'small': price += Hamburger.sizes.small.price; break;
+          case 'big': price += Hamburger.sizes.big.price; break;
+        }
+        switch (this.topping) {
+          case 'cheese': price += Hamburger.toppings.cheese.price; break;
+          case 'salad': price += Hamburger.toppings.salad.price; break;
+          case 'fries': price += Hamburger.toppings.fries.price; break;
+        }
+        return price += Hamburger.priceForTopping;
+      }
+      getCalorie() {
+        let calorie = 0;
+        switch (this.size) {
+          case 'small': calorie += Hamburger.sizes.small.calorie; break;
+          case 'big': calorie += Hamburger.sizes.big.calorie; break;
+        }
+        switch (this.topping) {
+          case 'cheese': calorie += Hamburger.toppings.cheese.calorie; break;
+          case 'salad': calorie += Hamburger.toppings.salad.calorie; break;
+          case 'fries': calorie += Hamburger.toppings.fries.calorie; break;
+        }
+        return calorie += Hamburger.calorieForTopping;
+      }
+      addTopping(topping) {
+        switch (topping) {
+          case 'cheese': Hamburger.calorieForTopping += Hamburger.toppings.cheese.calorie;
+            Hamburger.priceForTopping += Hamburger.toppings.cheese.price;
+            break;
+          case 'salad': Hamburger.calorieForTopping += Hamburger.toppings.salad.calorie;
+            Hamburger.priceForTopping += Hamburger.toppings.salad.price;
+            break;
+          case 'fries': Hamburger.calorieForTopping += Hamburger.toppings.fries.calorie;
+            Hamburger.priceForTopping += Hamburger.toppings.fries.price;
+            break;
+        }
+        return Hamburger.priceForTopping;
+        return Hamburger.calorieForTopping;
+      }
+    }
+    let cheeseburger = new Hamburger(Hamburger.SMALL, Hamburger.FRIES);
+    console.log(cheeseburger)
+  </script>
+</body>
+
+</html>
